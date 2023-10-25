@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+    body {
+        background: #f3f3f3;
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .header {
+        margin: 30px 0px;
+        font-weight: bold;
+    }
+    h1 {    
+        text-transform: uppercase;
+        font-weight: 800;
+    }  
+    #third {
+        color: #025F70;
+        margin-bottom: 30px;
+    } 
+    .card{
+        margin-top: 5%;
+        padding: 10%;
+        box-shadow: 10px 10px #b8b8b8;
+    }
+    #add {
+        border: none;
+        padding: 5px 15px;
+        border-radius: 5px;
+        color: #e6e6e6;
+        background-color: #0e0f0f;
+        transition: all 0.75s ease;
+        font-weight: normal;
+    }
+    #add:hover{
+        background-color:#e6e6e6;
+        color: #000000;
+    } 
+    ol {
+        text-align: left;
+        margin-top: 20px;
+    }
+    li {
+        list-style: none;
+        padding: 5px 5px;
+        color: #ffffff;
+        text-transform: capitalize;
+        font-weight: 600;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        background:#b8b8b8;
+    }
+    li > button {
+        font-weight: normal;
+        background: none;
+        border: none;
+        float: right;
+        color:#000000;
+        font-weight: 800;
+    }
+    input {
+        border-radius: 5px;
+        min-width: 65%;
+        padding: 5px;
+        border:1px solid black;
+        border-radius:5px;
+    }
+    .done {
+        background: #66ec31 !important;
+    }
+    .delete {display: none;}
+        </style>
+</head>
+<body>
+	<div class="card container">
+		<div class="row">
+			<div class="header col-12">
+				<h1>To-DO-Task</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<input id="u_Input" type="text" placeholder="ADD TASK..." maxlength="50">
+				<button id="add">Add Task</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class=" listItems col-12">
+				<ol type="A" class="col-12 offset-0 col-sm-8 offset-sm-2" style="color: #000000;">
+                </ol>
+			</div>
+		</div>
+	</div>
+<script>
+    let addButton = document.getElementById("add");
+    let input = document.getElementById("u_Input");
+    let ol = document.querySelector("ol");
+    let item = document.getElementsByTagName("li");
+    
+    function inputLength(){
+        return input.value.length;
+    } 
+    
+    function listLength(){
+        return item.length;
+    }
+    
+    
+    function createListElement() {
+        // let input_value=input.value;
+        // localStorage.setItem('item',input_value);
+        // let getvalue= localStorage.getItem('item')
+        // console.log('getvalue',getvalue);//local.....
+        let li = document.createElement("li"); // creates an element "li"
+        li.appendChild(document.createTextNode(input.value)); //makes text from input field the li text
+        ol.appendChild(li); //adds li to ul
+        input.value = ""; //Reset text input field
+        
+        
+    
+        //start
+        // because it's in the function, it only adds it for new items
+        function colorchanger() {
+            li.classList.toggle("done");
+        }
+        li.addEventListener("click",colorchanger);
+        
+        //end
+    
+    
+        // add delete button
+        let deleteBtn = document.createElement("button");
+        deleteBtn.appendChild(document.createTextNode("×"));
+        li.appendChild(deleteBtn);
+        deleteBtn.addEventListener("click", deleteListItem);
+        //end delete button
+    
+    
+        //add class button [d:n]
+        function deleteListItem(){
+            let choice=window.confirm("⚠️ Do you want to delete this task ⚠️")
+            if (choice) {
+            li.classList.add("delete")
+            }
+        }
+        //end add class delete
+    }
+    
+    
+    function addListAfterClick(){
+        if (inputLength() > 0) { //makes sure that an empty input field doesn't create a li
+            createListElement();
+        }
+    }
+    addButton.addEventListener("click",addListAfterClick);
+    
+    </script>
+</body>
+</html>
